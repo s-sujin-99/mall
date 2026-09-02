@@ -5,7 +5,8 @@ import { Card, Container, Row } from "react-bootstrap";
 import { API_SERVER_HOST } from "../../api/productApi";
 import PageComponent from "../../components/product/PageComponent";
 import FetchingModal from "../common/FetchingModel";
-import { exceptionHandle } from "../common/exceptionHandle";
+
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const host = API_SERVER_HOST;
 const initState = {
@@ -22,6 +23,7 @@ const initState = {
 };
 
 const ListComponent = () => {
+  const { exceptionHandle } = useCustomLogin();
   const { page, size, moveToProductList, moveToProductRead, refresh } =
     useCustomMove();
   const [serverData, setServerData] = useState(initState);
@@ -48,13 +50,13 @@ const ListComponent = () => {
         {fetching ? <FetchingModal /> : <></>}
         <Row className="d-flex justify-content-around mt-5 gap-4">
           {serverData?.dtoList?.map((product) => {
-            // 2. 이미지가 존재할 때만 안전하게 썸네일 경로 지정
+            // 2. 파일 이름이 존재할 때만 안전하게 썸네일 경로 지정
             const hasImage =
-              product.uploadFileNames && product.uploadFileNames.length > 0;
+              product?.uploadFileNames && product.uploadFileNames.length > 0;
+
             const imgSrc = hasImage
               ? `${host}/api/product/view/s_${product.uploadFileNames[0]}`
-              : "https://via.placeholder.com/150"; // 이미지가 없을 때 대체 이미지
-
+              : "https://via.placeholder.com/150";
             return (
               <Card
                 className="p-3 shadow-sm"
