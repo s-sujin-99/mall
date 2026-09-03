@@ -1,9 +1,11 @@
 import { React, useState } from "react";
 import { FloatingLabel, Form, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { data, useNavigate } from "react-router-dom";
-import { login, loginPostAsync } from "../../slices/loginSlice";
+// import { useDispatch } from "react-redux";
+// import { data, useNavigate } from "react-router-dom";
+// import { login, loginPostAsync } from "../../slices/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import KakaoLoginComponent from "./KakaoLoginComponent";
+
 const initState = {
   email: "",
   pw: "",
@@ -75,6 +77,7 @@ const LoginComponent = () => {
           로그인
         </Button>
       </div>
+      <KakaoLoginComponent />
     </>
   );
 };
